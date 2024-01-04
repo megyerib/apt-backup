@@ -4,9 +4,9 @@ set -eu
 cd `dirname $0`
 
 # Apt
-apt list --installed | grep -v "^Listing...$" > list.txt
+apt list --installed 2>/dev/null | grep -v "^Listing...$" > list.txt
 grep -oP "^[^/]+" list.txt > packets.txt
-grep "\[installed\]" list.txt | grep -oP "^[^/]+" > manual.txt
+apt list --manual-installed 2>/dev/null | grep -v "^Listing...$" | grep -oP "^[^/]+" > manual.txt
 
 # /etc/apt
 rm -rf ./etc_apt
