@@ -3,6 +3,17 @@ set -eu
 
 cd `dirname $0`
 
+# Config
+cfg=apt-backup.cfg
+if [[ ! -f $cfg ]]; then
+    echo "dir=backup" > $cfg
+fi
+source $cfg
+
+# Backup dir
+mkdir -p $dir
+cd $dir
+
 # Apt
 apt list --installed 2>/dev/null | grep -v "^Listing...$" > list.txt
 grep -oP "^[^/]+" list.txt > packets.txt
